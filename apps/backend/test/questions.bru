@@ -1,0 +1,18 @@
+meta {
+  name: questions
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8000/questions/answer
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "_id": "65fb527c8afa068281371cd0",
+    "answer": "alyssa coded it duh"
+  }
+}

@@ -1,12 +1,18 @@
 import express, { Request, Response, NextFunction } from 'express';
 import User from '../models/user';
 import requireAuth from '../middelwares/require-auth';
+import mongoose from 'mongoose';
 
 const accountRouter = express.Router();
 
 accountRouter
     .route('/signup')
     .post( async (req: Request, res: Response, next: NextFunction) => {
+
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(500).send('Database not connected');
+        }
+
         const { username, password } = req.body as {
             username: string;
             password: string;
@@ -68,5 +74,18 @@ accountRouter
         res.send('User logged out.');
     });
 
+accountRouter
+    .route('/userstatus')
+    .get(async (req: Request, res: Response) => {
+        if (
+            req.session!.user === null ||
+            req.session!.user === '' ||
+            req.session!.user === undefined
+          ) {
+            res.send('User logged out.');
+          } else {
+            res.send(req.session!.user);
+          }
+    })
 export default accountRouter;
 

@@ -12,8 +12,9 @@ const requireAuth = (req, res, next) => {
     if (req.session.user && req.session.user !== '') {
         next();
     } else {
-        console.log(req.session.user);
-        next(new Error('No user is logged in'));
+        next();
+        // console.log(req.session.user);
+        // next(new Error('No user is logged in'));
     }
 }
 

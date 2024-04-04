@@ -5,7 +5,7 @@ import accountRouter from './routes/account';
 import questionsRouter from './routes/questions';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-
+import cors from 'cors';
 
 // read environment variables from .env file
 dotenv.config();
@@ -14,6 +14,10 @@ const PORT = process.env.PORT ?? 8000;
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 
 // define root route
 app.get('/api/hello', (_, res) => {
@@ -37,8 +41,15 @@ app.use('/account', accountRouter);
 app.use('/questions', questionsRouter);
 
 //mongoose boilerplate
-const MONGO_URI = process.env.MONGODB_URI || 'INSERT HERE';
-mongoose.connect(MONGO_URI);
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://quinn2liu:Dong2liu202902@cluster0.8v5oiaw.mongodb.net/';
+mongoose
+  .connect(MONGO_URI)
+  .then(() => {
+    console.log('MongoDB connected');
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 // to print errors
 // const printError = (err, req, res, next) => {

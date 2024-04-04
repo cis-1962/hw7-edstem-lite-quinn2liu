@@ -33,7 +33,7 @@ export default function QuinnStem() {
         } else if (data) {
             setQuestions(data);
         }
-    }, );
+        }, [data, error]);
 
     return (
         <>  
@@ -52,29 +52,44 @@ export default function QuinnStem() {
                 )
                 }
             </div>
-            <div className='flex flex-col'>
-                {!loggedIn ?(
-                <div>
-                    <button type='submit'>
-                        <Link to={'/login'}>
-                            Log in to submit a question
-                        </Link>
-                    </button>
-                </div>) : (
-                <div>
-                    <button type='submit'>
-                        <Link className='p-2 bg-green-400 rounded text-white' to={"/questions/add"}>Post a question! +</Link>
-                    </button>
+            <div className='flex flex-row'>
+                <div className='flex flex-col'>
+                    {!loggedIn ?(
+                    <div>
+                        <button type='submit'>
+                            <Link to={'/login'}>
+                                Log in to submit a question
+                            </Link>
+                        </button>
+                    </div>) : (
+                    <div>
+                        <button type='submit'>
+                            <Link className='p-2 bg-green-400 rounded text-white' to={"/questions/add"}>Post a question! +</Link>
+                        </button>
+                    </div>
+                    )}
+                    <ul className='pt-4 flex flex-col'>
+                    {questions.map((question, index) => {
+                        return (
+                            <button className='px-20 border-2 border-gray-400 py-4 rounded-lg'
+                                key={question._id} 
+                                onClick={() => setCurrQuestion(index)}
+                                >
+                                <p>{question.questionText}</p>
+                            </button>
+                        );
+                    })}
+                    </ul>
                 </div>
-                )}
+                <div className='p-8 w-full'>
+                    {questions.length > 0 ? (
+                        <Question key={updateQuestion} question={questions[currQuestion]}/>
+                    ) : (
+                        null
+                    )}
+                </div>
             </div>
-            <div>
-                {questions.length > 0 ? (
-                    <Question key={updateQuestion} question={questions[currQuestion]}/>
-                ) : (
-                    <div>question does not exist</div>
-                )}
-            </div>
+            
         </div>
     </>
     );

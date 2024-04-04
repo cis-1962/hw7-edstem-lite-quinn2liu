@@ -21,23 +21,23 @@ export const Login = () => {
     return (
         <>
             <div className='flex flex-col p-8'>
-                <p className=' font-semibold text-lg text-blue-500'>Log In</p>
+                <p className=' font-semibold text-2xl text-blue-500 py-4'>Log In</p>
                 <form onSubmit={async (evt) => {
                     evt.preventDefault();
                     await LoginHandler();
                 }}>
-                    <div className=''>
-                        Username: 
+                    <div className='flex flex-row py-2'>
+                        <p className='pr-2'>Username: </p>
                         <input className='border-2 border-black rounded' type="text" value={username} 
                         onChange={(evt) => setUsername(evt.target.value)}/>
                     </div>
-                    <div>
-                        Password:
+                    <div className='flex flex-row py-2'>
+                        <p className='pr-2'>Password:</p>
                         <input className='border-2 border-black rounded' type="text" value={password} 
                         onChange={(evt) => setPassword(evt.target.value)}/>
                     </div>
-                    <button className='p-2 rounded bg-blue-500 text-white' type='submit'>Log In</button>
-                    <div className='flex flex-row'>
+                    <button className='py-2 px-4 rounded bg-blue-500 text-white' type='submit'>Log In</button>
+                    <div className='flex flex-row py-2'>
                         <p className='pr-2'>Don&apos;t have an Account?</p>
                         <Link className='text-blue-500' to="/signup">Sign up here!</Link>
                     </div>

@@ -41,7 +41,7 @@ app.use('/account', accountRouter);
 app.use('/questions', questionsRouter);
 
 //mongoose boilerplate
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://quinn2liu:Dong2liu202902@cluster0.8v5oiaw.mongodb.net/';
+const MONGO_URI = process.env.MONGODB_URI || '';
 mongoose
   .connect(MONGO_URI)
   .then(() => {

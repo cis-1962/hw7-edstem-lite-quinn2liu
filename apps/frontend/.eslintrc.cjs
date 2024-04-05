@@ -11,8 +11,10 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   rules: {
     'react-refresh/only-export-components': [
-      'warn',
+      'off',
       { allowConstantExport: true },
     ],
+    'no-console': 'off',
+    'no-alert': 'off',
   },
 };

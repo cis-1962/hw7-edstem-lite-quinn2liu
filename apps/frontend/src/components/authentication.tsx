@@ -1,18 +1,23 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import useSWR, { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 
 interface LoginContextProps {
   loggedIn: boolean;
   user: string;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
+  
+}
+
+interface LoginProviderProps {
+  children: React.ReactNode;
 }
 
 const LoginContext = createContext<LoginContextProps | undefined>(undefined);
 
-export const LoginProvider = ({ children }) => {
+export const LoginProvider = ({ children }: LoginProviderProps) => {
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState('');
@@ -20,8 +25,7 @@ export const LoginProvider = ({ children }) => {
     const fetcher = url => axios.get(url).then(res => res.data);
 
     
-    const {mutate} = useSWRConfig();
-    const { data, error } = useSWR(
+    const { data } = useSWR(
         'http://localhost:8000/account/userstatus', 
         fetcher
     );

@@ -9,11 +9,13 @@ interface QuestionProps {
         author: string;
         answer: string;
     };
+    currQuestion: number;
+    updateQuestions: (number, string) => void;
 }
 
 axios.defaults.withCredentials = true;
 
-export const Question = ({question}: QuestionProps) => {
+export const Question = ({question, currQuestion, updateQuestions}: QuestionProps) => {
     const _id = question._id;
     const { loggedIn } = useAuth();
     const [answer, setAnswer] = useState('');
@@ -32,8 +34,10 @@ export const Question = ({question}: QuestionProps) => {
                 }
             );
             if (response.data === 'Question answered.') {
+                console.log(response.data);
                 setAnswerMode(false);
                 setAnswered(true);
+                updateQuestions(currQuestion, answer);
             } else {
                 alert('Question could not be answered.');
             }
@@ -47,11 +51,11 @@ export const Question = ({question}: QuestionProps) => {
         if (answered) {
           setAnswered(false);
         }
-      }, [answered]);
+    }, [answered]);
     
     return (
         <>
-            <div className='flex flex-col border-2 border-gray-400 w-full rounded-xl'>
+            <div className='flex flex-col border-2 border-gray-400 rounded-xl'>
                 <p className='text-2xl font-bold pt-4 pl-4'>{question.questionText}</p>
                 <p className='text-lg font-semibold pt-2 pl-4'>Author: {question.author}</p>
                 <p className='py-2 pl-4 text-lg'>Answer: {question.answer}</p>
